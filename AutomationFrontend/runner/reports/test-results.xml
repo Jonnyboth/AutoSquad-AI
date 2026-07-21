@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuite name='KatalonHeadlessRunner' tests='1' failures='1' errors='0' skipped='0' time='17.575' timestamp='2026-07-11T00:24:04'>
+  <testcase name='TC_MercadoLibreBuscarCamaraAgregarCarrito' classname='runner.KatalonTest' time='17.575'>
+    <failure message='[FATAL] MercadoLibre presento un muro anti-bot (reCAPTCHA / verificacion de cuenta) en la pagina de resultados. No es un error de locator ni de codigo: es una proteccion del sitio contra trafico automatizado que no se puede resolver programaticamente. Reintentar mas tarde - no es un caso para ajustar locators.' type='AssertionError'>[FATAL] MercadoLibre presento un muro anti-bot (reCAPTCHA / verificacion de cuenta) en la pagina de resultados. No es un error de locator ni de codigo: es una proteccion del sitio contra trafico automatizado que no se puede resolver programaticamente. Reintentar mas tarde - no es un caso para ajustar locators.</failure>
+  </testcase>
+</testsuite>

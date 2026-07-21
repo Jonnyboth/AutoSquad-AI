@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalVariableEntities>
+   <description></description>
+   <name>default</name>
+   <tag></tag>
+   <defaultProfile>true</defaultProfile>
+   <GlobalVariableEntity>
+      <description>Plataforma de ejecución: 'android' o 'ios'</description>
+      <initValue>'android'</initValue>
+      <name>G_Platform</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description>Package ID / Bundle ID de la app (ej: com.grability.rappi)</description>
+      <initValue>'com.grability.rappi'</initValue>
+      <name>G_AppBundleID</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description>Automation name para Appium: 'UiAutomator2' (Android) o 'XCUITest' (iOS)</description>
+      <initValue>'UiAutomator2'</initValue>
+      <name>G_AutomationName</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description>Usuario de prueba (email o identificador)</description>
+      <initValue>''</initValue>
+      <name>G_User</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description>Nombre del dispositivo (como aparece en adb/instruments)</description>
+      <initValue>'R5CY111XY3E'</initValue>
+      <name>G_DevicesName</name>
+   </GlobalVariableEntity>
+</GlobalVariableEntities>

@@ -1,0 +1,85 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^python3 \"/Users/jhonsebastianrianoramirez/Katalon Studio/testAndroid/\\.github/skills/katalon-mobile-automation/extract_video_frames\\.py\" \"/Users/jhonsebastianrianoramirez/Movies/Omi Screen Recorder/openTiendaGeantRappiApp\\.mp4\" --fps 1 --output /tmp/video_frames_geant$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python3 /tmp/fix_agents\\.py$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "command": true,
+        "adb": true,
+        "/^adb -s R5CY111XY3E pull /sdcard/ui\\.xml /tmp/rappi_ui\\.xml 2>&1 && python3 -c \"\nimport xml\\.etree\\.ElementTree as ET\ntree = ET\\.parse\\('/tmp/rappi_ui\\.xml'\\)\nroot = tree\\.getroot\\(\\)\nfor node in root\\.iter\\('node'\\):\n    text = node\\.get\\('text',''\\)\n    rid = node\\.get\\('resource-id',''\\)\n    cls = node\\.get\\('class',''\\)\n    cd = node\\.get\\('content-desc',''\\)\n    if any\\(x in text\\.lower\\(\\) for x in \\['súper','super','geant','géant','mercado','tienda','favorit'\\]\\):\n        print\\(f'TEXT=\\{repr\\(text\\)\\} \\| RID=\\{rid\\} \\| CLASS=\\{cls\\} \\| CD=\\{repr\\(cd\\)\\} \\| BOUNDS=\\{node\\.get\\(\\\\\"bounds\\\\\"\\)\\}'\\)\n\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python3 -c \"\nimport xml\\.etree\\.ElementTree as ET\ntree = ET\\.parse\\('/tmp/rappi_ui\\.xml'\\)\nroot = tree\\.getroot\\(\\)\nfor node in root\\.iter\\('node'\\):\n    text = node\\.get\\('text',''\\)\n    rid = node\\.get\\('resource-id',''\\)\n    if 'storeName' in rid or 'store' in rid\\.lower\\(\\):\n        print\\(f'TEXT=\\{repr\\(text\\)\\} \\| RID=\\{rid\\} \\| CLASS=\\{node\\.get\\(\\\\\"class\\\\\"\\)\\} \\| CD=\\{repr\\(node\\.get\\(\\\\\"content-desc\\\\\",\\\\\"\\\\\"\\)\\)\\} \\| BOUNDS=\\{node\\.get\\(\\\\\"bounds\\\\\"\\)\\} \\| ENABLED=\\{node\\.get\\(\\\\\"enabled\\\\\"\\)\\} \\| CLICKABLE=\\{node\\.get\\(\\\\\"clickable\\\\\"\\)\\}'\\)\n\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python3 -c \"\nimport xml\\.etree\\.ElementTree as ET\ntree = ET\\.parse\\('/tmp/rappi_ui\\.xml'\\)\nroot = tree\\.getroot\\(\\)\n\ndef find_parent\\(root, target_bounds\\):\n    def search\\(node, parent=None\\):\n        for child in node:\n            if child\\.get\\('bounds'\\) == target_bounds:\n                return parent\n            result = search\\(child, node\\)\n            if result is not None:\n                return result\n        return None\n    return search\\(root\\)\n\n# Find Geant storeName node\nfor node in root\\.iter\\('node'\\):\n    if node\\.get\\('resource-id'\\) == 'com\\.grability\\.rappi:id/storeName' and node\\.get\\('text'\\) == 'Geant':\n        bounds = node\\.get\\('bounds'\\)\n        print\\(f'Geant storeName bounds=\\{bounds\\}'\\)\n        break\n\n# Find parent chain for Geant: walk up ancestors looking for clickable=true\ndef find_ancestors\\(root, target_text, target_rid\\):\n    def walk\\(node, chain\\):\n        for child in node:\n            if child\\.get\\('resource-id'\\) == target_rid and child\\.get\\('text'\\) == target_text:\n                return chain \\+ \\[child\\]\n            result = walk\\(child, chain \\+ \\[node\\]\\)\n            if result:\n                return result\n        return None\n    return walk\\(root, \\[\\]\\)\n\nchain = find_ancestors\\(root, 'Geant', 'com\\.grability\\.rappi:id/storeName'\\)\nif chain:\n    print\\('Ancestor chain \\(closest first\\):'\\)\n    for n in reversed\\(chain\\[-5:\\]\\):\n        rid = n\\.get\\('resource-id',''\\)\n        cls = n\\.get\\('class',''\\)\n        clickable = n\\.get\\('clickable',''\\)\n        cd = n\\.get\\('content-desc',''\\)\n        bounds = n\\.get\\('bounds',''\\)\n        text = n\\.get\\('text',''\\)\n        print\\(f'  CLS=\\{cls\\} \\| RID=\\{rid\\} \\| TEXT=\\{repr\\(text\\)\\} \\| CD=\\{repr\\(cd\\)\\} \\| CLICKABLE=\\{clickable\\} \\| BOUNDS=\\{bounds\\}'\\)\n\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python3 -c \"\nimport xml\\.etree\\.ElementTree as ET\ntree = ET\\.parse\\('/tmp/rappi_ui\\.xml'\\)\nroot = tree\\.getroot\\(\\)\n\n# Find the subtree of the GridView with content-desc='corridor__supermercados'\ndef find_by_cd\\(node, cd\\):\n    if node\\.get\\('content-desc'\\) == cd:\n        return node\n    for child in node:\n        result = find_by_cd\\(child, cd\\)\n        if result is not None:\n            return result\n    return None\n\ngridview = find_by_cd\\(root, 'corridor__supermercados'\\)\nif gridview:\n    print\\('GridView found, printing children:'\\)\n    for i, child in enumerate\\(gridview\\):\n        cls = child\\.get\\('class',''\\)\n        rid = child\\.get\\('resource-id',''\\)\n        cd = child\\.get\\('content-desc',''\\)\n        text = child\\.get\\('text',''\\)\n        clickable = child\\.get\\('clickable',''\\)\n        bounds = child\\.get\\('bounds',''\\)\n        print\\(f'  \\[\\{i\\}\\] CLS=\\{cls\\} \\| RID=\\{rid\\} \\| TEXT=\\{repr\\(text\\)\\} \\| CD=\\{repr\\(cd\\)\\} \\| CLICKABLE=\\{clickable\\} \\| BOUNDS=\\{bounds\\}'\\)\n        # Print sub-children to find clickable card\n        for j, subchild in enumerate\\(child\\):\n            sc = subchild\\.get\\('class',''\\)\n            sr = subchild\\.get\\('resource-id',''\\)\n            st = subchild\\.get\\('text',''\\)\n            scd = subchild\\.get\\('content-desc',''\\)\n            sclick = subchild\\.get\\('clickable',''\\)\n            sb = subchild\\.get\\('bounds',''\\)\n            print\\(f'    \\[\\{i\\}\\.\\{j\\}\\] CLS=\\{sc\\} \\| RID=\\{sr\\} \\| TEXT=\\{repr\\(st\\)\\} \\| CD=\\{repr\\(scd\\)\\} \\| CLICKABLE=\\{sclick\\} \\| BOUNDS=\\{sb\\}'\\)\n\" \\| head -80$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python3 -c \"\nimport xml\\.etree\\.ElementTree as ET\ntree = ET\\.parse\\('/tmp/rappi_ui\\.xml'\\)\nroot = tree\\.getroot\\(\\)\n# Find all clickable elements or elements with 'super' in any attribute\nfor node in root\\.iter\\('node'\\):\n    text = node\\.get\\('text',''\\)\n    cd = node\\.get\\('content-desc',''\\)\n    rid = node\\.get\\('resource-id',''\\)\n    bounds = node\\.get\\('bounds',''\\)\n    clickable = node\\.get\\('clickable',''\\)\n    if 'super' in text\\.lower\\(\\) or 'super' in cd\\.lower\\(\\) or 'Súper' in text:\n        print\\(f'TEXT=\\{repr\\(text\\)\\} \\| CD=\\{repr\\(cd\\)\\} \\| RID=\\{rid\\} \\| CLICKABLE=\\{clickable\\} \\| BOUNDS=\\{bounds\\}'\\)\n\" && echo \"---\" && python3 -c \"\nimport xml\\.etree\\.ElementTree as ET\ntree = ET\\.parse\\('/tmp/rappi_ui\\.xml'\\)\nroot = tree\\.getroot\\(\\)\n# Find all corridor elements\nfor node in root\\.iter\\('node'\\):\n    cd = node\\.get\\('content-desc',''\\)\n    if 'corridor' in cd\\.lower\\(\\) or 'favorit' in cd\\.lower\\(\\):\n        cls = node\\.get\\('class',''\\)\n        rid = node\\.get\\('resource-id',''\\)\n        bounds = node\\.get\\('bounds',''\\)\n        print\\(f'CD=\\{repr\\(cd\\)\\} \\| CLS=\\{cls\\} \\| RID=\\{rid\\} \\| BOUNDS=\\{bounds\\}'\\)\n\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    },
+    "chat.mcp.serverSampling": {
+        "testAndroid/.vscode/mcp.json: mobile-mcp": {
+            "allowedModels": [
+                "copilot/auto",
+                "copilotcli/claude-sonnet-4.6",
+                "copilotcli/claude-haiku-4.5",
+                "claude-code/claude-haiku-4.5",
+                "copilot/claude-haiku-4.5",
+                "copilotcli/claude-opus-4.5",
+                "claude-code/claude-opus-4.5",
+                "copilot/claude-opus-4.5",
+                "copilotcli/claude-opus-4.6",
+                "claude-code/claude-opus-4.6",
+                "copilot/claude-opus-4.6",
+                "copilotcli/claude-sonnet-4",
+                "claude-code/claude-sonnet-4",
+                "copilot/claude-sonnet-4",
+                "copilotcli/claude-sonnet-4.5",
+                "claude-code/claude-sonnet-4.5",
+                "copilot/claude-sonnet-4.5",
+                "claude-code/claude-sonnet-4.6",
+                "copilot/claude-sonnet-4.6",
+                "copilot/gemini-2.5-pro",
+                "copilot/gemini-3-flash-preview",
+                "copilotcli/gemini-3-pro-preview",
+                "copilot/gemini-3-pro-preview",
+                "copilot/gemini-3.1-pro-preview",
+                "copilotcli/gpt-4.1",
+                "copilot/gpt-4.1",
+                "copilot/gpt-4o",
+                "copilotcli/gpt-5-mini",
+                "copilot/gpt-5-mini",
+                "copilotcli/gpt-5.1",
+                "copilot/gpt-5.1",
+                "copilotcli/gpt-5.1-codex",
+                "copilot/gpt-5.1-codex",
+                "copilotcli/gpt-5.1-codex-max",
+                "copilot/gpt-5.1-codex-max",
+                "copilotcli/gpt-5.1-codex-mini",
+                "copilot/gpt-5.1-codex-mini",
+                "copilotcli/gpt-5.2",
+                "copilot/gpt-5.2",
+                "copilotcli/gpt-5.2-codex",
+                "copilot/gpt-5.2-codex",
+                "copilotcli/gpt-5.3-codex",
+                "copilot/gpt-5.3-codex",
+                "copilot/grok-code-fast-1"
+            ]
+        }
+    },
+    "java.compile.nullAnalysis.mode": "automatic"
+}

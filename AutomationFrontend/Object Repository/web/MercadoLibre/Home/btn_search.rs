@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description>Botón submit (ícono lupa) del formulario de búsqueda del header</description>
+   <name>btn_search</name>
+   <tag></tag>
+   <elementGuidId>173aff5d-1ad2-4e4c-9df3-61faa24e6e60</elementGuidId>
+   <selectorMethod>BASIC</selectorMethod>
+   <smartLocatorEnabled>false</smartLocatorEnabled>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>css</name>
+      <type>Main</type>
+      <value>button.nav-search-btn</value>
+      <webElementGuid>f88964ec-5206-4df2-bd5f-4a09c2c746eb</webElementGuid>
+   </webElementProperties>
+   <locator>button.nav-search-btn</locator>
+   <locatorCollection>
+      <entry><key>ID</key><value></value></entry>
+      <entry><key>NAME</key><value></value></entry>
+      <entry><key>XPATH</key><value>//button[contains(@class,'nav-search-btn')]</value></entry>
+      <entry><key>IMAGE</key><value></value></entry>
+      <entry><key>ACCESSIBILITY</key><value></value></entry>
+      <entry><key>ATTRIBUTES</key><value>//button[contains(@class,'nav-search-btn')]</value></entry>
+      <entry><key>ANDROID_VIEWTAG</key><value></value></entry>
+      <entry><key>IOS_PREDICATE_STRING</key><value></value></entry>
+      <entry><key>ANDROID_UI_AUTOMATOR</key><value></value></entry>
+      <entry><key>CLASS_NAME</key><value>nav-search-btn</value></entry>
+      <entry><key>CUSTOM</key><value></value></entry>
+      <entry><key>IOS_CLASS_CHAIN</key><value></value></entry>
+      <entry><key>CSS</key><value>button.nav-search-btn</value></entry>
+   </locatorCollection>
+   <locatorStrategy>CSS</locatorStrategy>
+</WebElementEntity>

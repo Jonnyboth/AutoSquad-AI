@@ -1,0 +1,26 @@
+# Dependencias
+node_modules/
+
+# Entornos virtuales / cachés Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Variables de entorno (secretos) — nunca versionar
+**/.env
+!**/.env.example
+
+# Artefactos de build / IDEs generados por Katalon, Gradle, Eclipse, etc.
+build/
+bin/
+.gradle/
+.classpath
+.project
+.settings/
+.cache/
+.DS_Store
+
+# Logs y artefactos de sesiones de automatización/MCP
+*.log
+.playwright-mcp/
