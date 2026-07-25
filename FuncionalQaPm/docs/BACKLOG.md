@@ -19,7 +19,7 @@ Criterios de Aceptación en formato Gherkin/BDD.
 
 ### ⚠️ Nota de orquestación
 La Fase de Diseño formal (prototipos estructurales en Markdown/HTML/CSS, breakpoints
-responsivos) corresponde a `skill_ui_ux_designer`, referenciada en `super_agent.md` pero cuya
+responsivos) corresponde a `skill_ui_ux_designer`, referenciada en `super_agent_Qa_PM.md` pero cuya
 carpeta aún no existe en `.prompts/`. Las HUs anteriores incluyen únicamente sugerencias de
 UX/UI de alto nivel como parte de la especificación funcional (dentro del alcance de
 `skill_project_manager`), no un prototipo validado. Antes de iniciar la Fase de Construcción de

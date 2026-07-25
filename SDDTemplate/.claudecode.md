@@ -1,1 +1,1 @@
-"${include:.prompts/super_agent.md}"
+"${include:.prompts/super_agent_sdd_template.md}"

@@ -98,11 +98,18 @@ prueba cuando existe un ticket de Jira con criterios de aceptación explícitos;
 los ACs siempre mandan sobre lo observado.
 
 Persiste los hallazgos como notas dentro de la conversación o, si el usuario lo pide para
-reutilización futura, en un archivo Markdown simple bajo `docs/QaExplorer/{plataforma}/{app}/
-Page {Pantalla}.md` (crear la carpeta si no existe; nunca duplicar un archivo para la misma
-pantalla — edítalo). Esta convención es opcional y solo se activa si el usuario pide
-explícitamente documentar hallazgos para el futuro; si solo pide "explora y créame los casos
-de prueba", pasa directo a diseñar los TCs con [formatting-rules.md](references/formatting-rules.md).
+reutilización futura (o si el hallazgo es lo bastante extenso como para cubrir un módulo o
+pantalla completa), en un archivo Markdown bajo la estructura de carpetas por tipo de
+dispositivo → app/página → módulo → sub-módulo definida en
+[references/exploration-doc-structure.md](references/exploration-doc-structure.md) (documenta
+módulos, funciones principales, nombres reales de componentes y flujos; crea las carpetas si
+no existen; nunca dupliques un archivo para la misma pantalla — edítalo). Esta documentación es
+el insumo obligatorio que [audit_test_case.md](audit_test_case.md) consulta antes de crear un
+Caso de Prueba relacionado (Regla 11 de
+[references/formatting-rules.md](references/formatting-rules.md)). Si el usuario solo pide
+"explora y créame los casos de prueba" sin pedir documentación reutilizable, pasa directo a
+diseñar los TCs con [formatting-rules.md](references/formatting-rules.md) — la documentación en
+`.md` sigue siendo opcional en ese caso puntual, no un bloqueo.
 
 ## Restricciones
 

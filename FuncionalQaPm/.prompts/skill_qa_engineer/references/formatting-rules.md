@@ -197,6 +197,38 @@ listando los valores válidos — nunca lo adivines ni lo dejes pasar silenciado
 Si en el futuro cambia la configuración del proyecto, no inventes campos nuevos: vuelve a
 consultar `get_test_case_schema` (sección `fields`) y actualiza esta tabla.
 
+## Regla 11 — Consulta obligatoria de documentación exploratoria (.md) cuando exista
+
+Antes de crear un TC nuevo (o de editar uno existente para robustecerlo), **es obligatorio**
+buscar si ya existe documentación exploratoria bajo `docs/QaExplorer/` (estructura y contenido
+definidos en [exploration-doc-structure.md](exploration-doc-structure.md)) para el
+`{TipoDispositivo}/{AppOPagina}/{Modulo}/{SubModulo}` que corresponde al TC:
+
+- **Si existe** un archivo `.md` que coincide con el módulo/página del TC: léelo completo y
+  úsalo para escribir pasos y resultados esperados con **nombres reales de componentes**
+  (sección "Componentes identificados") y **flujos reales observados** (sección "Flujos
+  documentados"), en vez de descripciones genéricas. Anota en `description` o `precondition`
+  del TC la ruta del módulo documentado, ej.:
+  `Módulo: Android/MyDemoApp/Autenticacion/Login`.
+  Si el TC tiene `{ticket}` con ACs explícitos que contradicen lo observado en la exploración,
+  el AC manda (igual que en [exploration.md](../exploration.md)), pero señala la discrepancia
+  al usuario — puede indicar documentación desactualizada.
+- **Si no existe** ningún archivo para ese módulo/página: continúa el flujo normal sin
+  bloquear la creación, pero decláraselo explícitamente al usuario y sugiere ejecutar primero
+  [exploration.md](../exploration.md) si el requerimiento es ambiguo. Nunca inventes rutas de
+  módulo, nombres de componentes ni flujos "como si" existiera documentación.
+
+```
+OK:   step: "Presionar el botón 'Ingresar' (id=btn_login)"
+      expected_result: "Se muestra el mensaje 'Usuario o contraseña incorrectos' (verbatim,
+                         documentado en Android/MyDemoApp/Autenticacion/Login.md)"
+MAL:  step: "Presionar el botón de login"   <- genérico, ignora el nombre/id real ya documentado
+```
+
+Detalle del flujo de verificación (búsqueda, criterios de coincidencia, manejo de ambigüedad
+entre varios candidatos) en [audit_test_case.md](../audit_test_case.md) — esta skill también
+audita el cumplimiento de esta regla (y de las 10 anteriores) sobre TCs ya existentes.
+
 ## Checklist previo a crear/actualizar un TC
 
 - [ ] Título sigue Regla 1 (con o sin `[{ticket}]` según corresponda)
@@ -211,3 +243,4 @@ consultar `get_test_case_schema` (sección `fields`) y actualiza esta tabla.
 - [ ] `type` ("Tipo") completado cuando aplique — es campo nativo, no `customField` (Regla 10)
 - [ ] `estimatedEffort` ("Esfuerzo Estimado") siempre completado en segundos, nunca `null`/omitido (Regla 10 — obligatorio por política de esta skill)
 - [ ] Antes de crear, se ejecutó `search_test_cases` para descartar duplicados (ver [triage.md](../triage.md))
+- [ ] Se buscó documentación exploratoria (`docs/QaExplorer/`) para el módulo/página del TC; si existe, se usaron sus nombres reales de componentes/flujos, y si no existe, se declaró explícitamente al usuario (Regla 11)

@@ -23,7 +23,7 @@
       ],
       "env": {
         "ANDROID_HOME": "${ANDROID_HOME}",
-        "CAPABILITIES_CONFIG": ".prompts/super_agent.md",
+        "CAPABILITIES_CONFIG": ".prompts/super_agent_sdd_template.md",
         "SCREENSHOTS_DIR": "./target/screenshots"
       }
     },

@@ -13,7 +13,7 @@ propio proyecto.
 
 ```mermaid
 flowchart TD
-    U["Usuario"] -->|"pide una tarea"| SA["Súper Agente Orquestador\n(super_agent.md)"]
+    U["Usuario"] -->|"pide una tarea"| SA["Súper Agente Orquestador\n(super_agent_*.md, uno por módulo)"]
 
     SA -->|"1. Planeación"| PM["skill_project_manager\nHU en formato BDD"]
     SA -->|"2. Diseño"| UX["skill_ui_ux_designer\nPrototipos responsivos"]
@@ -32,22 +32,40 @@ Cada skill vive como una carpeta de *prompts* en `.prompts/<skill>/` con:
 - `tools.md` — cómo se integra con el sistema externo real (MCP, API REST, CLI de respaldo).
 - `examples.md` / `test_spec.md` / etc. — plantillas de invocación y ejemplos rellenos.
 
-El orquestador (`super_agent.md`) no improvisa: si una skill referenciada en el catálogo no
-tiene su carpeta implementada todavía, se detiene y lo informa en vez de simular su
-comportamiento (ver la regla crítica en cada `super_agent.md`).
+Cada orquestador de módulo no improvisa: si una skill referenciada en su catálogo no tiene su
+carpeta implementada todavía, se detiene y lo informa en vez de simular su comportamiento (ver
+la regla crítica en cada `super_agent_*.md`).
 
 ## Estructura del repositorio
 
-| Módulo | Rol | Skills implementadas |
-|---|---|---|
-| [`FuncionalQaPm/`](FuncionalQaPm) | Gestión funcional de backlog y QA manual/exploratorio | `skill_project_manager`, `skill_qa_engineer` |
-| [`AutomationBackend/`](AutomationBackend) | Automatización de pruebas de backend (pytest) | `skill_qa_engineer` |
-| [`SDDTemplate/`](SDDTemplate) | Plantilla de desarrollo dirigido por especificación (backend + frontend) | `skill_fullstack_developer`, `skill_ui_ux_designer` |
-| [`AutomationFrontend/`](AutomationFrontend) | Proyecto Katalon Studio de automatización de UI (web/móvil) | — (proyecto de automatización, no de orquestación) |
+Cada módulo tiene su propio orquestador con nombre identificable (ya no comparten el genérico
+`super_agent.md`), para poder invocar el de cualquier módulo sin ambigüedad desde una única
+sesión abierta en la raíz del repositorio:
+
+| Módulo | Rol | Orquestador | Skills implementadas |
+|---|---|---|---|
+| [`FuncionalQaPm/`](FuncionalQaPm) | Gestión funcional de backlog y QA manual/exploratorio | [`super_agent_Qa_PM.md`](FuncionalQaPm/.prompts/super_agent_Qa_PM.md) | `skill_project_manager`, `skill_qa_engineer` |
+| [`AutomationBackend/`](AutomationBackend) | Automatización de pruebas de backend (pytest) | [`super_agent_automation_backend.md`](AutomationBackend/.prompts/super_agent_automation_backend.md) | `skill_qa_engineer` |
+| [`SDDTemplate/`](SDDTemplate) | Plantilla de desarrollo dirigido por especificación (backend + frontend) | [`super_agent_sdd_template.md`](SDDTemplate/.prompts/super_agent_sdd_template.md) | `skill_fullstack_developer`, `skill_ui_ux_designer` |
+| [`AutomationFrontend/`](AutomationFrontend) | Proyecto Katalon Studio de automatización de UI (web/móvil) | — (sin orquestador todavía) | — (proyecto de automatización, no de orquestación) |
 
 > Cada módulo evolucionó de forma independiente, así que hoy ningún módulo tiene las 4 skills
 > completas a la vez. Para un ciclo de vida punta a punta, combina las carpetas `.prompts/`
 > que necesites en un mismo proyecto.
+
+## Ejecutar todo desde la raíz (instancia única)
+
+La raíz del repositorio tiene su propio [`.mcp.json`](.mcp.json), que agrega los servidores MCP
+de los 3 módulos con orquestador (Zephyr, Atlassian, Playwright, aisquare-playwright, mobile-mcp,
+aio-tests-mcp, y una variante de `appium-mcp` por módulo). Al abrir una sesión de Claude Code con
+`AutoSquad-AI` como carpeta raíz del workspace, las herramientas de los 3 módulos quedan
+disponibles en la misma sesión — no hace falta reabrir el editor dentro de cada subcarpeta.
+
+Para trabajar como el QA/PM, el de automatización de backend o el de SDD, dile al agente que siga
+las instrucciones del archivo `super_agent_*.md` correspondiente de la tabla de arriba; las
+herramientas MCP de ese módulo ya están conectadas. Cada módulo conserva también su propio
+`.mcp.json` local, así que sigue funcionando igual si alguien prefiere abrir Claude Code aislado
+dentro de esa subcarpeta en vez de en la raíz.
 
 ## Integraciones reales configuradas
 
@@ -66,7 +84,8 @@ comportamiento (ver la regla crítica en cada `super_agent.md`).
 1. Elige el módulo (o combinación de módulos) que se ajuste a tu proyecto.
 2. Copia `.prompts/<skill>/.env.example` a `.env` en cada skill que lo requiera y completa tus
    propias credenciales (Jira, AIO Tests) — **nunca** commitees el `.env` real.
-3. Abre el proyecto con tu agente (Claude Code, Copilot, etc.) y activa `super_agent.md` como
+3. Abre el proyecto con tu agente (Claude Code, Copilot, etc.) desde la raíz `AutoSquad-AI` y
+   activa el `super_agent_*.md` del módulo con el que quieras trabajar (ver tabla arriba) como
    punto de entrada; él te guiará sobre qué skill activar según la fase en la que estés.
 4. Personaliza `docs/BACKLOG.md` con el backlog real de tu propio proyecto Jira — el que viene
    en este repo es solo un ejemplo del formato esperado.
