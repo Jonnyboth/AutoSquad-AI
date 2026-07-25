@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<TestCaseEntity>
-   <description>Busca "camara" en mercadolibre.com.co, entra al detalle del primer producto organico relevante y hace clic en "Agregar al carrito", verificando el resultado observable de esa accion. Run QA-20260710-mercadolibre-camara-carrito.</description>
-   <name>TC_MercadoLibreBuscarCamaraAgregarCarrito</name>
-   <tag>smoke,web,mercadolibre</tag>
-   <comment></comment>
-   <recordOption>OTHER</recordOption>
-   <testCaseGuid>2a2ddd19-40a4-4632-8a0e-5dd49a21187e</testCaseGuid>
-</TestCaseEntity>
